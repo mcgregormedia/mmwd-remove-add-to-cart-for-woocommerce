@@ -17,5 +17,8 @@ A new Remove Add to Cart settings tab is added to WooCommerce > Settings > Produ
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file an upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.0.1 20-03-2017
+FIXED: some users received a php warning 
+
 1.0.0 15-12-2016
 Initial release

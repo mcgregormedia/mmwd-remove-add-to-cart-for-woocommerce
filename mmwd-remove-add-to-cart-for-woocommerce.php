@@ -3,7 +3,7 @@
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions
-Version:     1.0.0
+Version:     1.0.1
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function mmwd_add_remove_atc_settings_section( $sections ) {
 	
-	$sections['mmwd_remove_atc'] = __( 'Remove Add to Cart', 'mmwd-ratc' );
+	$sections['mmwd_remove_atc_section'] = __( 'Remove Add to Cart', 'mmwd-ratc' );
 	
 	return $sections;
 	
@@ -84,7 +84,7 @@ function mmwd_display_remove_atc_settings( $settings, $current_section ) {
 	/**
 	 * Check the current section is what we want
 	 **/
-	if ( $current_section == 'mmwd_remove_atc' ) {
+	if ( $current_section == 'mmwd_remove_atc_section' ) {
 		
 		$mmwd_remove_atc = array();
 		
@@ -100,8 +100,7 @@ function mmwd_display_remove_atc_settings( $settings, $current_section ) {
 		$mmwd_remove_atc[] = array(
 			'id'       => 'mmwd_remove_atc',
 			'name'     => __( 'Remove Add to Cart buttons', 'mmwd-ratc' ),
-			'type'     => 'checkbox',
-			'default'  => '1'
+			'type'     => 'checkbox'
 		);
 
 		$mmwd_remove_atc[] = array( 'type' => 'sectionend', 'id' => 'mmwd_remove_atc_end' );
@@ -128,18 +127,23 @@ add_filter( 'woocommerce_get_settings_products', 'mmwd_display_remove_atc_settin
 /**
  * Adds the filter
  *
- * @since 1.0.0
+ * @since 1.0.1
  */
 
 function mmwd_remove_atc_add_filter(){
 	
 	$mmwd_remove_atc = get_option( 'mmwd_remove_atc' );
 	
-	if( $mmwd_remove_atc && $mmwd_remove_atc == true ){
+	if( $mmwd_remove_atc && $mmwd_remove_atc === 'yes' ){
 	
-		add_filter( 'woocommerce_is_purchasable', false );
+		return false;
 	
+	}
+	else{
+		
+		return true;
+		
 	}
 	
 }
-add_filter( 'woocommerce_init', 'mmwd_remove_atc_add_filter', 5 );
+add_filter( 'woocommerce_is_purchasable', 'mmwd_remove_atc_add_filter' );
