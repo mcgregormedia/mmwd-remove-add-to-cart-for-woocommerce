@@ -2,7 +2,7 @@
 Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
-Tested up to: 4.7
+Tested up to: 4.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Install as usual by going to Plugins > Add New and searching for MMWD Remove Add
 
 == Changelog ==
 1.0.1 20-03-2017
-FIXED: some users received a php warning 
+FIXED: some users received a php warning when the plugin was in use
 
 1.0.0 15-12-2016
 Initial release
