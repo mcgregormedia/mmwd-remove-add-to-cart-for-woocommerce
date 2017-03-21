@@ -3,7 +3,7 @@
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions
-Version:     1.0.1
+Version:     1.1.0
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
@@ -103,6 +103,13 @@ function mmwd_display_remove_atc_settings( $settings, $current_section ) {
 			'type'     => 'checkbox'
 		);
 
+		// Checkbox
+		$mmwd_remove_atc[] = array(
+			'id'       => 'mmwd_remove_price',
+			'name'     => __( 'Remove prices', 'mmwd-ratc' ),
+			'type'     => 'checkbox'
+		);
+
 		$mmwd_remove_atc[] = array( 'type' => 'sectionend', 'id' => 'mmwd_remove_atc_end' );
 		
 		return $mmwd_remove_atc;
@@ -125,16 +132,14 @@ add_filter( 'woocommerce_get_settings_products', 'mmwd_display_remove_atc_settin
 
 
 /**
- * Adds the filter
+ * Adds the filter to remove the Add to Cart buttons
  *
  * @since 1.0.1
  */
 
 function mmwd_remove_atc_add_filter(){
 	
-	$mmwd_remove_atc = get_option( 'mmwd_remove_atc' );
-	
-	if( $mmwd_remove_atc && $mmwd_remove_atc === 'yes' ){
+	if( get_option( 'mmwd_remove_atc' ) && get_option( 'mmwd_remove_atc' ) === 'yes' ){
 	
 		return false;
 	
@@ -147,3 +152,28 @@ function mmwd_remove_atc_add_filter(){
 	
 }
 add_filter( 'woocommerce_is_purchasable', 'mmwd_remove_atc_add_filter' );
+
+
+
+
+
+
+/**
+ * Removes prices
+ *
+ * @since 1.1.0
+ */
+
+function mmwd_remove_price_remove_actions(){
+
+	if( get_option( 'mmwd_remove_price' ) && get_option( 'mmwd_remove_price' ) === 'yes' ){
+		
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart' );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+		remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+		
+	}
+
+}
+add_action( 'init', 'mmwd_remove_price_remove_actions' );
