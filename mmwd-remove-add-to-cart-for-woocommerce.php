@@ -2,8 +2,8 @@
 /*
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
-Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions
-Version:     1.1.0
+Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions.
+Version:     1.2.0
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
@@ -31,7 +31,105 @@ along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html.
 
 
 if ( ! defined( 'ABSPATH' ) ) {
+	
 	exit; // Came here directly? Vamoose.
+	
+}
+
+
+
+
+
+
+
+
+
+/**
+ * Loads translation files
+ * 
+ * @since 1.2.0					Added function
+ */
+
+function mmwd_remove_atc_load_textdomain() {
+	
+	load_plugin_textdomain( 'mmwd-ratc', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
+	
+}
+add_action( 'plugins_loaded', 'mmwd_remove_atc_load_textdomain' );
+
+
+
+
+
+
+/**
+ * Adds option on activation to check if newly activated. If true, runs WooCOmmerce check after register_activation_hook redirection
+ * 
+ * @since 1.2.0					Added function
+ */
+
+function mmwd_remove_atc_activate(){
+	
+    add_option( 'mmwd_remove_atc_activated', 'mmwd-ratc' );
+	
+}
+register_activation_hook( __FILE__, 'mmwd_remove_atc_activate' );
+
+
+
+
+
+
+
+/**
+ * Checks whether WooCommerce is active and deactivates plugin with admin notice if not
+ * 
+ * @since 1.2.0					Added function
+ */
+
+function mmwd_remove_atc_load_plugin(){
+
+    if ( is_admin() && get_option( 'mmwd_remove_atc_activated' ) == 'mmwd-ratc' ) {
+		
+        delete_option( 'mmwd_remove_atc_activated' ); // remove option we set on activation
+
+        if ( !class_exists( 'WooCommerce' ) ) { // check WooCommerce is active
+			
+            add_action( 'admin_notices', 'mmwd_remove_atc_admin_notice' ); // if not display admin notice
+
+            deactivate_plugins( plugin_basename( __FILE__ ) ); // deactivate plugin
+
+            if ( isset( $_GET['activate'] ) ) {
+				
+                unset( $_GET['activate'] );
+				
+            }
+        }
+		
+    }
+	
+}
+add_action( 'admin_init', 'mmwd_remove_atc_load_plugin' );
+
+
+
+
+
+
+
+
+/**
+ * Display an error message if WooCommerce is not activated
+ * 
+ * @return string				The formatted HTML
+ * 
+ * @since 1.2.0					Added function
+ */
+
+function mmwd_remove_atc_admin_notice (){
+    ?>
+    <div class="notice notice-error"><p><?php _e( 'MMWD Remove Add To Cart for WooCommerce requires WooCommerce to run. Please install and activate WooCommerce.', 'mmwd-ratc' ) ?></p></div>
+    <?php
 }
 
 
@@ -49,7 +147,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
  * @return array $sections  	The updated settings sections array
  *
- * @since 1.0.0
+ * @since 1.0.0					Added function
  */
 
 function mmwd_add_remove_atc_settings_section( $sections ) {
@@ -76,7 +174,9 @@ add_filter( 'woocommerce_get_sections_products', 'mmwd_add_remove_atc_settings_s
  * @return array $mmwd_remove_atc			The updated array of settings
  * @return array $settings					The standard array of settings
  *
- * @since 1.0.0
+ * @since 1.2.0								Added note to reflect theme issues
+ * @since 1.1.0								Added 'Remove prices' option
+ * @since 1.0.0								Added function
  */
 
 function mmwd_display_remove_atc_settings( $settings, $current_section ) {
@@ -93,7 +193,7 @@ function mmwd_display_remove_atc_settings( $settings, $current_section ) {
 			'id' => 'mmwd_remove_atc_title',
 			'name' => __( 'Remove Add to Cart buttons', 'mmwd-ratc' ),
 			'type' => 'title',
-			'desc' => __( 'Remove all Add to Cart buttons without affecting anything else hooked into the Add to Cart actions.', 'mmwd-ratc' )
+			'desc' => __( 'Remove all Add to Cart buttons without affecting anything else hooked into the Add to Cart actions. Removing prices may not work with themes that do not use the standard WooCommerce hooks.', 'mmwd-ratc' )
 		);
 
 		// Checkbox
@@ -134,7 +234,7 @@ add_filter( 'woocommerce_get_settings_products', 'mmwd_display_remove_atc_settin
 /**
  * Adds the filter to remove the Add to Cart buttons
  *
- * @since 1.0.1
+ * @since 1.0.1		Added function
  */
 
 function mmwd_remove_atc_add_filter(){
@@ -161,16 +261,15 @@ add_filter( 'woocommerce_is_purchasable', 'mmwd_remove_atc_add_filter' );
 /**
  * Removes prices
  *
- * @since 1.1.0
+ * @since 1.2.0		Removed erroneous remove_actions
+ * @since 1.1.0		Added function
  */
 
 function mmwd_remove_price_remove_actions(){
 
 	if( get_option( 'mmwd_remove_price' ) && get_option( 'mmwd_remove_price' ) === 'yes' ){
 		
-		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart' );
 		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
-		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
 		remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
 		
 	}
