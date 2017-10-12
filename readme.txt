@@ -20,9 +20,14 @@ Navigate = to Admin > WooCommerce > Settings > Products and click the Remove Add
 This plugin is compatible with WooCommerce 3.x versions.
 
 == Installation ==
-Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file an upload to your-site.com/wp-content/plugins.
+Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.3.0 12-10-2017
+ADDED: WC requires at least and WC tested up to tags fo WooCommerce 3.2+
+UPDATED: .pot file
+FIXED: typo in readme.txt
+
 1.2.0 16-08-2017
 ADDED: check to see if WooCommerce is activated on plugin activation
 ADDED: note to reflect theme issues
