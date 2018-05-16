@@ -2,7 +2,7 @@
 Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
-Tested up to: 4.9
+Tested up to: 5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,6 +27,10 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.4.1 16-05-2018
+UPDATED: WC tested up to tags for WooCommerce 3.4.x
+UPDATED: Tested up to WordPress 5.0
+
 1.4.0 27-04-2018
 ADDED: GDPR notice in ReadMe
 
