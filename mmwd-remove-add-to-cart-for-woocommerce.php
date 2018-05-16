@@ -8,7 +8,7 @@ Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
 WC requires at least: 3.0.0
-WC tested up to: 3.3.0
+WC tested up to: 3.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
