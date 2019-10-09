@@ -3,7 +3,7 @@
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions.
-Version:     1.4.5
+Version:     1.4.6
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
@@ -258,10 +258,30 @@ add_filter( 'woocommerce_is_purchasable', 'mmwd_remove_atc_add_filter' );
 
 
 
+/**
+ *  Removes the Add to Cart buttons from variable products
+ *  
+ *  @since 1.4.6
+ */
+ 
+function mmwd_remove_atc_variable_product() {
+	
+	if( get_option( 'mmwd_remove_atc' ) && get_option( 'mmwd_remove_atc' ) === 'yes' ){
+
+		remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20 );
+	
+	}
+	
+}
+add_action( 'woocommerce_single_product_summary', 'mmwd_remove_atc_variable_product', 1, 0 );
+
+
+
+
 
 
 /**
- * Removes prices
+ * Removes prices on single products
  *
  * @since 1.2.0		Removed erroneous remove_actions
  * @since 1.1.0		Added function
@@ -278,3 +298,31 @@ function mmwd_remove_price_remove_actions(){
 
 }
 add_action( 'init', 'mmwd_remove_price_remove_actions' );
+
+
+
+
+/**
+ *  Removes prices on variable products
+ *  
+ *  @param int $price 			The priginal price
+ *  @param object $product		The product object 
+ *  
+ *  @return string $price		The updated price
+ *  
+ *  @since 1.4.6
+ */
+ 
+function mmwd_remove_price_variable_product( $price, $product ) {
+	
+	if ( ( get_option( 'mmwd_remove_price' ) && get_option( 'mmwd_remove_price' ) === 'yes' ) && ! is_admin() ){
+		
+		$price = '';
+		return $price;
+		
+	}
+	
+}
+add_filter( 'woocommerce_variable_sale_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+add_filter( 'woocommerce_variable_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+add_filter( 'woocommerce_get_price_html', 'mmwd_remove_price_variable_product', 10, 2 );

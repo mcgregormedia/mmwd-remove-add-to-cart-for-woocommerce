@@ -13,7 +13,7 @@ This plugin removes all Add to Cart buttons throughout a WooCommerce website by 
 
 = How to use this plugin =
 
-Navigate to Admin > WooCommerce > Settings > Products and click the Remove Add to Cart settings tab. Use the checkboxes to enable the Remove Add to Cart and/or Remove Prices options.
+Navigate to Admin > WooCommerce > Settings > Products and click the Remove Add to Cart settings tab. Use the checkboxes to enable the Remove Add to Cart and/or Remove Prices options. Removing prices may not work with themes that do not use the standard WooCommerce hooks.
 
 = WooCommerce compatibility =
 
@@ -27,6 +27,9 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.4.6 13-09-2019
+ADDED: compatibility with variable products
+
 1.4.5 13-08-2019
 UPDATED: WC tested up to tags for WooCommerce 3.7.x
 
