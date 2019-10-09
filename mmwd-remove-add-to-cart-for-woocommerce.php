@@ -3,7 +3,7 @@
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions.
-Version:     1.4.6
+Version:     1.4.7
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
@@ -106,6 +106,7 @@ function mmwd_remove_atc_load_plugin(){
                 unset( $_GET['activate'] );
 				
             }
+			
         }
 		
     }
@@ -129,9 +130,11 @@ add_action( 'admin_init', 'mmwd_remove_atc_load_plugin' );
  */
 
 function mmwd_remove_atc_admin_notice (){
+	
     ?>
     <div class="notice notice-error"><p><?php _e( 'MMWD Remove Add To Cart for WooCommerce requires WooCommerce to run. Please install and activate WooCommerce.', 'mmwd-ratc' ) ?></p></div>
     <?php
+	
 }
 
 
@@ -181,11 +184,9 @@ add_filter( 'woocommerce_get_sections_products', 'mmwd_add_remove_atc_settings_s
  * @since 1.0.0								Added function
  */
 
-function mmwd_display_remove_atc_settings( $settings, $current_section ) {
+function mmwd_display_remove_atc_settings( $settings, $current_section ){
 	
-	/**
-	 * Check the current section is what we want
-	 **/
+	// Check the current section is what we want
 	if ( $current_section == 'mmwd_remove_atc_section' ) {
 		
 		$mmwd_remove_atc = array();
@@ -212,14 +213,15 @@ function mmwd_display_remove_atc_settings( $settings, $current_section ) {
 			'type'     => 'checkbox'
 		);
 
-		$mmwd_remove_atc[] = array( 'type' => 'sectionend', 'id' => 'mmwd_remove_atc_end' );
+		$mmwd_remove_atc[] = array(
+			'type' => 'sectionend',
+			'id' => 'mmwd_remove_atc_end'
+		);
 		
 		return $mmwd_remove_atc;
 	
-	/**
-	 * If not, return the standard settings
-	 **/
-	} else {
+	// If not, return the standard settings
+	}else{ 
 		
 		return $settings;
 		
@@ -245,8 +247,7 @@ function mmwd_remove_atc_add_filter(){
 	
 		return false;
 	
-	}
-	else{
+	}else{
 		
 		return true;
 		
@@ -305,24 +306,38 @@ add_action( 'init', 'mmwd_remove_price_remove_actions' );
 /**
  *  Removes prices on variable products
  *  
- *  @param int $price 			The priginal price
+ *  @param int $price 			The original price
  *  @param object $product		The product object 
  *  
  *  @return string $price		The updated price
  *  
+ *  @since 1.4.7				FIXED: rearranged hook order to honour mmwd_remove_price option
  *  @since 1.4.6
  */
  
 function mmwd_remove_price_variable_product( $price, $product ) {
-	
-	if ( ( get_option( 'mmwd_remove_price' ) && get_option( 'mmwd_remove_price' ) === 'yes' ) && ! is_admin() ){
-		
-		$price = '';
-		return $price;
-		
-	}
+
+	$price = '';
+	return $price;
 	
 }
-add_filter( 'woocommerce_variable_sale_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
-add_filter( 'woocommerce_variable_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
-add_filter( 'woocommerce_get_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+
+
+
+/**
+ *  Conditionally adds filters to fire mmwd_remove_price_variable_product()
+ *  
+ *  @since 1.4.7
+ */
+function mmwd_remove_price_variable_product_init() {
+	
+	if ( ( get_option( 'mmwd_remove_price' ) && get_option( 'mmwd_remove_price' ) === 'yes' ) ){
+		
+		add_filter( 'woocommerce_variable_sale_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+		add_filter( 'woocommerce_variable_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+		add_filter( 'woocommerce_get_price_html', 'mmwd_remove_price_variable_product', 10, 2 );
+		
+	}
+
+}
+add_action( 'init', 'mmwd_remove_price_variable_product_init' );
