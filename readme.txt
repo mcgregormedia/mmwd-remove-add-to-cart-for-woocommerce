@@ -2,7 +2,7 @@
 Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
-Tested up to: 5.3
+Tested up to: 5.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,7 +17,7 @@ Navigate to Admin > WooCommerce > Settings > Products and click the Remove Add t
 
 = WooCommerce compatibility =
 
-This plugin is compatible with WooCommerce 3.x versions.
+This plugin is compatible with WooCommerce 3.x and 4.x versions.
 
 = GDPR information =
 
@@ -27,6 +27,10 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.4.10 26-02-2020
+UPDATED: Tested up to WooCommerce 4.0
+UPDATED: Tested up to WordPress 5.4
+
 1.4.9 24-01-2020
 UPDATED: WC tested up to tags for WooCommerce 3.9.x
 
