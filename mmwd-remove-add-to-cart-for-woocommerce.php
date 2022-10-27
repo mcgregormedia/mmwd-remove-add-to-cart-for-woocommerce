@@ -3,7 +3,7 @@
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
 Plugin URI:  https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions.
-Version:     1.4.18
+Version:     1.4.19
 Author:      McGregor Media Web Design
 Author URI:  https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
