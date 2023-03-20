@@ -2,7 +2,7 @@
 Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
-Tested up to: 6.1
+Tested up to: 6.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
