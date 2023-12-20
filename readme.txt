@@ -27,7 +27,7 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
-1.4.22 28-08-2023
+1.4.22 20-12-2023
 UPDATED: Tested up to WordPress 6.5
 UPDATED: compatibility with WooCommerce 8.4
 
