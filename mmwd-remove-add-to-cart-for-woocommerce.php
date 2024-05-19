@@ -1,14 +1,19 @@
 <?php
 /*
 Plugin Name: MMWD Remove Add To Cart for WooCommerce
-Plugin URI:  https://mcgregormedia.co.uk
+Plugin URI: https://mcgregormedia.co.uk
 Description: Removes all Add to Cart buttons throughout a WooCommerce website without affecting anything else hooked into the Add to Cart actions.
-Version:     1.4.22
-Author:      McGregor Media Web Design
-Author URI:  https://mcgregormedia.co.uk
+Version: 1.4.23
+Stable tag: 1.4.23
+Author: McGregor Media Web Design
+Author URI: https://mcgregormedia.co.uk
 Text Domain: mmwd-ratc
+Requires at least: 4.7
+Tested up to: 6.5
+Requires PHP: 7.4
+Requires plugins: woocommerce
 WC requires at least: 3.0
-WC tested up to: 8.4
+WC tested up to: 8.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,9 +34,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html.
 
 
 
-
-
-
 if ( ! defined( 'ABSPATH' ) ) {
 	
 	exit; // Came here directly? Vamoose.
@@ -41,7 +43,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
+
+
+
+/**
+ * Declare HPOS compatibility
+ * 
+ * @since 1.9.0					Added compatibility
+ */
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
 
 
 
@@ -62,8 +78,6 @@ add_action( 'plugins_loaded', 'mmwd_remove_atc_load_textdomain' );
 
 
 
-
-
 /**
  * Adds option on activation to check if newly activated. If true, runs WooCOmmerce check after register_activation_hook redirection
  * 
@@ -76,71 +90,6 @@ function mmwd_remove_atc_activate(){
 	
 }
 register_activation_hook( __FILE__, 'mmwd_remove_atc_activate' );
-
-
-
-
-
-
-
-/**
- * Checks whether WooCommerce is active and deactivates plugin with admin notice if not
- * 
- * @since 1.2.0					Added function
- */
-
-function mmwd_remove_atc_load_plugin(){
-
-    if ( is_admin() && get_option( 'mmwd_remove_atc_activated' ) == 'mmwd-ratc' ) {
-		
-        delete_option( 'mmwd_remove_atc_activated' ); // remove option we set on activation
-
-        if ( !class_exists( 'WooCommerce' ) ) { // check WooCommerce is active
-			
-            add_action( 'admin_notices', 'mmwd_remove_atc_admin_notice' ); // if not display admin notice
-
-            deactivate_plugins( plugin_basename( __FILE__ ) ); // deactivate plugin
-
-            if ( isset( $_GET['activate'] ) ) {
-				
-                unset( $_GET['activate'] );
-				
-            }
-			
-        }
-		
-    }
-	
-}
-add_action( 'admin_init', 'mmwd_remove_atc_load_plugin' );
-
-
-
-
-
-
-
-
-/**
- * Display an error message if WooCommerce is not activated
- * 
- * @return string				The formatted HTML
- * 
- * @since 1.2.0					Added function
- */
-
-function mmwd_remove_atc_admin_notice (){
-	
-    ?>
-    <div class="notice notice-error"><p><?php _e( 'MMWD Remove Add To Cart for WooCommerce requires WooCommerce to run. Please install and activate WooCommerce.', 'mmwd-ratc' ) ?></p></div>
-    <?php
-	
-}
-
-
-
-
-
 
 
 
@@ -163,9 +112,6 @@ function mmwd_add_remove_atc_settings_section( $sections ) {
 	
 }
 add_filter( 'woocommerce_get_sections_products', 'mmwd_add_remove_atc_settings_section' );
-
-
-
 
 
 
@@ -232,9 +178,6 @@ add_filter( 'woocommerce_get_settings_products', 'mmwd_display_remove_atc_settin
 
 
 
-
-
-
 /**
  * Adds the filter to remove the Add to Cart buttons
  *
@@ -279,8 +222,6 @@ add_action( 'woocommerce_single_product_summary', 'mmwd_remove_atc_variable_prod
 
 
 
-
-
 /**
  * Removes prices on single products
  *
@@ -321,6 +262,7 @@ function mmwd_remove_price_variable_product( $price, $product ) {
 	return $price;
 	
 }
+
 
 
 
