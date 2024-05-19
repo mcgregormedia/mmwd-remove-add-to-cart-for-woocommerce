@@ -3,6 +3,11 @@ Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
 Tested up to: 6.5
+Stable tag: 1.4.23
+Requires PHP: 7.4
+Requires plugins: woocommerce
+WC requires at least: 3.0
+WC tested up to: 8.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,6 +32,13 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.4.23 24-05-2024
+ADDED: Plugin dependencies
+ADDED: Stable tag
+ADDED: Compatibility with HPOS (this plugin does not use HPOS but still triggered a warning in WooCommerce)
+UPDATED: Compatibility with WooCommerce 8.9
+REMOVED: Notice displayed if WooCommerce is not activated
+
 1.4.22 20-12-2023
 UPDATED: Tested up to WordPress 6.5
 UPDATED: compatibility with WooCommerce 8.4
