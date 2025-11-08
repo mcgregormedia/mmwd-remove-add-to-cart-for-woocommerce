@@ -22,7 +22,7 @@ Navigate to Admin > WooCommerce > Settings > Products and click the Remove Add t
 
 = WooCommerce compatibility =
 
-This plugin is compatible with WooCommerce 3.x, 4.x, 5.x, 6.x and 7.x versions.
+This plugin is compatible with WooCommerce 3.x, 4.x, 5.x, 6.x, 7.x, 8.x, 9.x and 10.x versions.
 
 = GDPR information =
 
