@@ -2,12 +2,12 @@
 Contributors: mcgregormedia
 Donate link: https://paypal.me/mcgregormedia
 Requires at least: 4.7
-Tested up to: 6.5
-Stable tag: 1.4.23
+Tested up to: 6.8
+Stable tag: 1.4.24
 Requires PHP: 7.4
 Requires plugins: woocommerce
 WC requires at least: 3.0
-WC tested up to: 8.9
+WC tested up to: 10.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,6 +32,10 @@ This plugin does not gather or store any personal data.
 Install as usual by going to Plugins > Add New and searching for MMWD Remove Add To Cart for WooCommerce or download the plugin file and upload to your-site.com/wp-content/plugins.
 
 == Changelog ==
+1.4.24 08-11-2025
+UPDATED: Compatibility with WordPress 6.8
+UPDATED: Compatibility with WooCommerce 10.3
+
 1.4.23 24-05-2024
 ADDED: Plugin dependencies
 ADDED: Stable tag
